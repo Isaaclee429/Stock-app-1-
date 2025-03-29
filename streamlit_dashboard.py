@@ -35,10 +35,10 @@ def load_data(symbol):
 data = load_data(symbol)
 
 st.subheader(f"📈 {symbol_name} 價格與 RSI")
-if "rsi" in data.columns:
+if all(col in data.columns for col in ["Close", "rsi"]):
     st.line_chart(data[["Close", "rsi"]])
 else:
-    st.warning("⚠ 無法取得 RSI 數據，請稍後再試或換其他商品。")
+    st.warning("⚠ 資料不完整（缺少 Close 或 RSI 欄位），請稍後再試或選擇其他商品。")
 
 latest_price = data["Close"].iloc[-1]
 latest_rsi = data["rsi"].iloc[-1] if "rsi" in data.columns else None
